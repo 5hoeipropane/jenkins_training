@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                sh "robot mytest.robot"
+                sh "robot --dryrun mytest.robot"
                 robot(
                     outputPath: './',
                     outputFileName: 'output.xml',
@@ -16,12 +16,6 @@ pipeline {
                     otherFiles: "**/*.png,*/.png,*/.jpg,*/.txt",
                     onlyCritical: false
                 )
-                script{
-                    String failed_count = tm('${ROBOT_FAILED}').toInteger()
-                    String passed_count = tm('${ROBOT_PASSED}').toInteger()
-
-                    slackSend(channel: '#jenkins_training', message:"Shoei \nPASSED: ${passed_count}\nFAILED: ${failed_count}")
-                }
             }
         }
     }
