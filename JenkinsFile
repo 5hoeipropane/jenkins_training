@@ -5,17 +5,6 @@ pipeline {
         stage('Hello') {
             steps {
                 sh "robot --dryrun mytest.robot"
-                robot(
-                    outputPath: './',
-                    outputFileName: 'output.xml',
-                    reportFileName: 'report.html',
-                    logFileName: 'log.html',
-                    disableArchiveOutput: false,
-                    passThreshold: 100.0,
-                    unstableThreshold: 100.0,
-                    otherFiles: "**/*.png,*/.png,*/.jpg,*/.txt",
-                    onlyCritical: false
-                )
             }
         }
     }
