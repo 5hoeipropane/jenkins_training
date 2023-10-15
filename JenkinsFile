@@ -1,3 +1,28 @@
 pipeline {
-    
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                sh "robot mytest.robot"
+                robot(
+                    outputPath: './',
+                    outputFileName: 'output.xml',
+                    reportFileName: 'report.html',
+                    logFileName: 'log.html',
+                    disableArchiveOutput: false,
+                    passThreshold: 100.0,
+                    unstableThreshold: 100.0,
+                    otherFiles: "**/*.png,*/.png,*/.jpg,*/.txt",
+                    onlyCritical: false
+                )
+                script{
+                    String failed_count = tm('${ROBOT_FAILED}').toInteger()
+                    String passed_count = tm('${ROBOT_PASSED}').toInteger()
+
+                    slackSend(channel: '#jenkins_training', message:"Shoei \nPASSED: ${passed_count}\nFAILED: ${failed_count}")
+                }
+            }
+        }
+    }
 }
