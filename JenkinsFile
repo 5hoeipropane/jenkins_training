@@ -5,6 +5,7 @@ pipeline {
         stage('Hello') {
             steps {
                 sh "robot --dryrun mytest.robot"
+                echo "start dryrun"
                 robot(
                     outputPath: './',
                     outputFileName: 'output.xml',
