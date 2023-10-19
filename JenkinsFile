@@ -11,14 +11,15 @@ pipeline {
                     echo "test"
                 }
             } 
-        }
-        post {
-            steps{
-                script{
-                    if ("${currentBuild.currentResult}" == 'SUCCESS') {
-                        common.updateGithubStatus("SUCCESSFUL")
-                    } else {
-                        common.updateGithubStatus("FAILED")
+        
+            post {
+                steps{
+                    script{
+                        if ("${currentBuild.currentResult}" == 'SUCCESS') {
+                            common.updateGithubStatus("SUCCESSFUL")
+                        } else {
+                            common.updateGithubStatus("FAILED")
+                        }
                     }
                 }
             }
