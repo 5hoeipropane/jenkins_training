@@ -9,13 +9,15 @@ pipeline {
                 sleep 30
                 echo "test"
             } 
+        }
         post {
+            steps{
                 if ("${currentBuild.currentResult}" == 'SUCCESS') {
                     common.updateGithubStatus("SUCCESSFUL")
                 } else {
                     common.updateGithubStatus("FAILED")
                 }
-        }
+            }
         }
     }
 }
