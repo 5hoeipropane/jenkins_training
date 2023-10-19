@@ -10,3 +10,5 @@ def updateGithubStatus(state){
         """
     }
 }
+
+return this
