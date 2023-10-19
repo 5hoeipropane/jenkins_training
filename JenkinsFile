@@ -4,18 +4,22 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                common = load "./cicd/jenkinsfile/common/common.groovy"
-                common.updateGithubStatus("INPROGRESS")
-                sleep 30
-                echo "test"
+                script{
+                    common = load "./cicd/jenkinsfile/common/common.groovy"
+                    common.updateGithubStatus("INPROGRESS")
+                    sleep 30
+                    echo "test"
+                }
             } 
         }
         post {
             steps{
-                if ("${currentBuild.currentResult}" == 'SUCCESS') {
-                    common.updateGithubStatus("SUCCESSFUL")
-                } else {
-                    common.updateGithubStatus("FAILED")
+                script{
+                    if ("${currentBuild.currentResult}" == 'SUCCESS') {
+                        common.updateGithubStatus("SUCCESSFUL")
+                    } else {
+                        common.updateGithubStatus("FAILED")
+                    }
                 }
             }
         }
