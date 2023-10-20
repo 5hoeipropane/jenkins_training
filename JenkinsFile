@@ -6,8 +6,7 @@ pipeline {
             steps {
                 script{
                     common = load "common.groovy"
-                    common.updateGithubStatus("INPROGRESS")
-                    sleep 30
+                    common.updateGithubStatus("pending")
                     echo "test"
                 }
             } 
