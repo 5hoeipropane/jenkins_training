@@ -12,7 +12,7 @@ pipeline {
             } 
         
             post {
-                steps{
+
                     script{
                         if ("${currentBuild.currentResult}" == 'SUCCESS') {
                             common.updateGithubStatus("success")
@@ -20,7 +20,6 @@ pipeline {
                             common.updateGithubStatus("failure")
                         }
                     }
-                }
             }
         }
     }
