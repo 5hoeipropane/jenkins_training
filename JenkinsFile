@@ -1,21 +1,26 @@
-pipeline {
-    agent any
-
+pipeline{
+    agent { label 'sae_macbook_m2' }
     stages {
-        stage('Hello') {
-            steps {
-                sh "robot --dryrun mytest.robot"
-                robot(
-                    outputPath: './',
-                    outputFileName: 'output.xml',
-                    reportFileName: 'report.html',
-                    logFileName: 'log.html',
-                    disableArchiveOutput: false,
-                    passThreshold: 100.0,
-                    unstableThreshold: 100.0,
-                    otherFiles: "**/*.png,*/.png,*/.jpg,*/.txt",
-                    onlyCritical: false
-                )
+        stage('Hello'){
+            steps{
+                sh "robot mytest.robot"
+                    robot(
+                        outputPath: './',
+                        outputFileName: 'output.xml',
+                        reportFileName: 'report.html',
+                        logFileName: 'log.html',
+                        disableArchiveOutput: false,
+                        passThreshold: 100.0,
+                        unstableThreshold: 100.0,
+                        otherFiles: '*.png,*.jpg',
+                        onlyCritical: false
+                    )
+                script{
+                    String failed = tm('${ROBOT_FAILED}')
+                    String passed = tm('${ROBOT_PASSED}')
+                    slackSend(channel: "#learn_jenkins_001", message:  "SAE\nPASSED:${passed} \nFAILED:${failed}")
+                }
+                
             }
         }
     }
